@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+
+option java_multiple_files = true;
+
+package model;
+
+
+message ReceiveStatus {
+    bool status_ok = 1;
+    int64 num_deals = 2;
+}
+
+message Deal {
+    string id = 1;
+    string contract = 2;
+    string ctp = 3;
+    repeated double prices = 4 [packed=true];
+}
+
+service DealBroker {
+    rpc send_deals(stream Deal) returns (ReceiveStatus);
+    rpc send_deal(Deal) returns (ReceiveStatus);
+}
